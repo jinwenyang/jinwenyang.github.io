@@ -4,16 +4,29 @@
 
 <?php
 
+$Link=mysqli_connect(
+'localhost',
+'root',
+'o937o24537',
+'phphw');
+
+
+if(isset($_GET["submit"])){
+
 $year=$_GET["year"];
 $pru=$_GET["pru"];
 $loc=$_GET["loc"];
 $gender=$_GET["gender"];
 $uname=$_GET["uname"];
 $upwd=$_GET["upwd"];
+$uem=$_GET["uem"];
 $list=$_GET["list"];
 $ads=$_GET["ads"];
 
 
+$sqL2="INSERT INTO personal (name,tel,email,city,loc,gender) VALUES ('$uname','$upwd','$uem','$list','$ads','$gender')";
+$result=mysqli_query($Link, $sqL2);
+}
 
 print"Down are your answers:<br><br>";
 
@@ -85,7 +98,7 @@ print "<br/><br/>";
 
 print "name:".$uname."<br/>";
 print "phone number:".$upwd."<br/>";
-//echo "email:".$uem."<br/>";
+
 
 
 
@@ -115,15 +128,44 @@ switch ($list) {
 		break;
 
 }
- print "市".$ads."<br/>";
+ print "市".$ads."<br/><br>";
+print "--------------------<br/>";
+echo "<h2>填寫人資訊</h2>";
 
-//$interest=$_GET["interest"];
+$sqL2="select * from personal";
+$result=mysqli_query($Link, $sqL2);
 
-//echo "�A������:";
-//foreach ($interest as $data{
-//	echo " ". $data;
-//}
-//echo "<br/>;
+echo"<table border=1>";
+
+echo"<tr>";
+	echo"<td>";
+	echo "No";
+	echo"</td><td>";
+	echo "姓名";
+	echo"</td><td>";
+	echo "電話";
+	echo"</td>";
+
+while($row=mysqli_fetch_assoc($result)){
+
+	echo"<tr>";
+	echo"<td>";
+	echo $row["code"];
+	$code=$row["code"];
+	echo"</td><td>";
+	echo $row["name"];
+	echo"</td><td>";
+	echo $row["tel"];
+	echo"</td><td>";
+	echo "<a href='delnut.php?scode=$code'>刪除</a>";
+	echo"</td><td>";
+	echo "<a href='molnut.php?scode=$code'>修改</a>";
+	echo"</td>";
+}
+echo "<table>";
+
+
+mysqli_close($Link);
 
 ?>
 
